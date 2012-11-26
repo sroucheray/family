@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Photos de famille. Hommage à Jean &amp; Micheline Roucheray et leurs ascendances.</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<!-- Le styles -->
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<style type="text/css">
+			body {
+				padding-top: 20px;
+				padding-bottom: 40px;
+			}
+
+			/* Custom container */
+			.container-narrow {
+				margin: 0 auto;
+				max-width: 700px;
+			}
+			.container-narrow > hr {
+				margin: 30px 0;
+			}
+
+			/* Main marketing message and sign up button */
+			.jumbotron {
+				margin: 60px 0;
+				text-align: center;
+			}
+			.jumbotron h1 {
+				font-size: 72px;
+				line-height: 1;
+			}
+			.jumbotron .btn {
+				font-size: 21px;
+				padding: 14px 24px;
+			}
+
+			/* Supporting marketing content */
+			.marketing {
+				margin: 60px 0;
+			}
+			.marketing p + h4 {
+				margin-top: 28px;
+			}
+		</style>
+		<link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<!-- Fav and touch icons -->
+		<link rel="shortcut icon" href="../assets/ico/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+	</head>
+
+	<body>
+
+		<div class="container-narrow">
+
+			<div class="masthead">
+				<!--<ul class="nav nav-pills pull-right">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">A propos</a></li>
+				</ul>-->
+				<h3>Photos de famille</h3><h4>Hommage à Jean &amp; Micheline Roucheray et leurs ascendances</h4>
+			</div>
+
+			<hr>
+		<div>
+		<span>Visibility</span>
+		<select id="visibility">
+				<option>all</option>
+				<option>private</option>
+				<option>public</option>
+				<option>visible</option>
+		</select>
+		<br>
+		<span>Projection</span>
+		<select id="projection">
+				<option>api</option>
+				<option>base</option>
+		</select>
+		<br>
+		<span>Kind</span>
+		<select id="kind">
+				<option>album</option>
+				<option>photo</option>
+				<option>comment</option>
+				<option>tag</option>
+				<option>user</option>
+		</select>
+		</div>
+
+			<hr>
+
+			<div class="footer">
+				<p></p>
+			</div>
+
+		</div> <!-- /container -->
+		<script src=http://code.jquery.com/jquery-latest.js></script>
+		<script src=js/bootstrap.min.js></script>
+		<script>
+			$(function(){
+				$("select").change(function(){
+					var baseUrl = "https://picasaweb.google.com/data/feed/",
+							postfixUrl = "",
+							id = "109653549592049142052",
+							parameters = [
+								["authkey", "Gv1sRgCLSArejF_6D3tAE"],
+								["alt", "json"]
+							],
+							visibility = $("#visibility").val(),
+							projection = $("#projection").val(),
+							kind = $("#kind").val(),
+							searchUrl = baseUrl + projection + "/user/" + id + "?",
+							paramsTemp = [];
+
+							parameters.push(["category", kind]);
+							parameters.push(["access", visibility]);
+
+							$.each(parameters, function(i, param){
+								console.log(param);
+								paramsTemp.push(param.join("="));
+							});
+							
+							searchUrl += paramsTemp.join("&");
+  $.ajax({
+    type: 'GET',
+    url: searchUrl,
+    crossDomain: true,
+    dataType: 'jsonp',
+    callback:'toto',
+    success: function (data){
+				console.log(data);
+				console.log($.parseXML(data));
+			}
+  });
+							console.log(searchUrl);
+				});
+			});
+		</script>
+	</body>
+</html>
