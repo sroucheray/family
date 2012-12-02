@@ -109,14 +109,23 @@
 		<script src=http://code.jquery.com/jquery-latest.js></script>
 		<script src=js/bootstrap.min.js></script>
 		<script>
-			$(function(){
+			$(function(){		
+var userid = "109653549592049142052";
+var albumid = "Forge";
+				$.getJSON("https://picasaweb.google.com/data/feed/base/user/" + userid /*+ "/album/" + albumid */+ "?kind=tag&access=visible&alt=json-in-script&authkey=Gv1sRgCLSArejF_6D3tAE&callback=?", function(data){
+
+				console.log(data);
+				console.log($.parseXML(data));
+
+		});
+
 				$("select").change(function(){
 					var baseUrl = "https://picasaweb.google.com/data/feed/",
 							postfixUrl = "",
 							id = "109653549592049142052",
 							parameters = [
 								["authkey", "Gv1sRgCLSArejF_6D3tAE"],
-								["alt", "json"]
+								["alt", "json-in-script"]
 							],
 							visibility = $("#visibility").val(),
 							projection = $("#projection").val(),
@@ -124,7 +133,7 @@
 							searchUrl = baseUrl + projection + "/user/" + id + "?",
 							paramsTemp = [];
 
-							parameters.push(["category", kind]);
+							parameters.push(["kind", kind]);
 							parameters.push(["access", visibility]);
 
 							$.each(parameters, function(i, param){
